@@ -6,11 +6,11 @@
       "camelcase": "Wat",
       "title": "WebAssembly Text Format",
       "scope": "source.wat",
-      "file-types": [
-        "wat"
-      ],
+      "file-types": ["wat"],
       "injection-regex": "^wat$",
-      "class-name": "TreeSitterWat"
+      "class-name": "TreeSitterWat",
+      "highlights": "queries/highlights.scm",
+      "tags": "queries/tags.scm"
     }
   ],
   "metadata": {

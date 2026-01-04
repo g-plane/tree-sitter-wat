@@ -3268,11 +3268,23 @@
       ]
     },
     "share": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "(?:un)?shared"
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "shared"
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "unshared"
+          }
+        }
+      ]
     },
     "string": {
       "type": "TOKEN",

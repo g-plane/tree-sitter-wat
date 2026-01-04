@@ -1435,6 +1435,11 @@
     "fields": {}
   },
   {
+    "type": "share",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "struct_type",
     "named": true,
     "fields": {},
@@ -1843,8 +1848,8 @@
     "named": false
   },
   {
-    "type": "share",
-    "named": true
+    "type": "shared",
+    "named": false
   },
   {
     "type": "start",
@@ -1889,6 +1894,10 @@
   {
     "type": "uinteger",
     "named": true
+  },
+  {
+    "type": "unshared",
+    "named": false
   },
   {
     "type": "vec_type",

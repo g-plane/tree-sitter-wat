@@ -516,7 +516,7 @@ export default grammar({
         token('f32x4'),
         token('f64x2'),
       ),
-    share: _ => token(/(?:un)?shared/),
+    share: _ => choice(token('shared'), token('unshared')),
     string: _ => token(/"(?:[^"\r\n]|\\")*"/),
     uinteger: _ => token(/(?:\d+(?:_\d+)*\d*|0x[\da-fA-F]+(?:_[\da-fA-F])*[\da-fA-F]*)/),
 
