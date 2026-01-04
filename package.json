@@ -20,6 +20,7 @@
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20251231.1",
     "dprint": "^0.51.1",
+    "node-addon-api": "^8.5.0",
     "tree-sitter-cli": "^0.26.3"
   }
 }

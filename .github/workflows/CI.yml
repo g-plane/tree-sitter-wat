@@ -8,5 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: npm i
-      - run: npm test
+      - uses: pnpm/action-setup@v4.2.0
+        with:
+          version: latest
+          run_install: true
+      - run: pnpm test
