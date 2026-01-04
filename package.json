@@ -12,6 +12,14 @@
     "wasm"
   ],
   "type": "module",
+  "files": [
+    "bindings/node",
+    "queries",
+    "src",
+    "binding.gyp",
+    "grammar.js",
+    "tree-sitter.json"
+  ],
   "scripts": {
     "build": "tree-sitter build",
     "test": "tree-sitter test",
