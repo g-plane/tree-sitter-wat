@@ -10,7 +10,8 @@ tag
   (import "test" "t3" (tag $t1 (param i32 f32)))
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_tag)
     (module_field_tag

@@ -10,7 +10,8 @@ table
 (module (table 0 0xffff_ffff funcref))
 (module (table 0 funcref ref.null $a))
 ---
-(source_file
+
+(root
   (module
     (module_field_table
       (table_type

@@ -70,7 +70,8 @@ func
   )
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_func)
     (module_field_func
@@ -267,7 +268,7 @@ func
         (index
           (identifier)))
       (param
-          (num_type))
+        (num_type))
       (param
         (num_type)
         (num_type))

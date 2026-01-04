@@ -20,7 +20,7 @@ address
 )
 ---
 
-(source_file
+(root
   (module
     (module_field_memory
       (mem_type

@@ -11,7 +11,8 @@ memory
 (module (memory 0 1 (pagesize 65536)))
 (module (memory 0 1 shared) (memory 0 1 unshared (pagesize 1)))
 ---
-(source_file
+
+(root
   (module
     (module_field_memory
       (mem_type

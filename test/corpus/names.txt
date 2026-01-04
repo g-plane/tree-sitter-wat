@@ -499,7 +499,8 @@ names
   (func (export ")˺˼𔗏𝅴𝅶𝅸𝅺⁾₎❩❫⟯﴿︶﹚）｠󠀩❳❵⟧⟩⟫⟭⦈⦊⦖⸣⸥︘︸︺︼︾﹀﹂﹄﹈﹜﹞］｝｣󠁝󠁽»’”›❯") (result i32) (i32.const 399))
 )
 ---
-(source_file
+
+(root
   (module
     (line_comment)
     (module_field_func

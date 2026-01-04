@@ -11,7 +11,7 @@ export default grammar({
   name: 'wat',
 
   rules: {
-    source_file: $ => choice(repeat($.module), repeat1($._module_field)),
+    root: $ => choice(repeat($.module), repeat1($._module_field)),
 
     addr_type: _ => choice('i32', 'i64'),
 

@@ -24,7 +24,8 @@ array
   (type (array (mut (ref null i31))))
 )
 ---
-(source_file
+
+(root
   (module
     (type_def
       (sub_type

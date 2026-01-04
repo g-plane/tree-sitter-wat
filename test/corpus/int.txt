@@ -37,7 +37,8 @@ int
   (func (export "i64-hex-sep2") (result i64) (i64.const 0x1_a_A_0_f))
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_func
       (export

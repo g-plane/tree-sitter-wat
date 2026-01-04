@@ -31,7 +31,8 @@ bulk
   (elem (i32.const 0) $zero $one $two)
 )
 ---
-(source_file
+
+(root
   (line_comment)
   (module
     (module_field_memory

@@ -14,7 +14,8 @@ rec types
   )
 )
 ---
-(source_file
+
+(root
   (module
     (rec_type)
     (rec_type
@@ -74,6 +75,7 @@ rec types
                 (heap_type
                   (index
                     (identifier)))))))))))
+
 ==================
 type defs
 ==================
@@ -117,7 +119,8 @@ type defs
   )
 )
 ---
-(source_file
+
+(root
   (module
     (type_def
       (sub_type
@@ -326,6 +329,7 @@ type defs
             (num_type)
             (num_type))
           (result))))))
+
 ==================
 subtyping
 ==================
@@ -340,7 +344,8 @@ subtyping
   (type $t2 (sub final (func)))
 )
 ---
-(source_file
+
+(root
   (module
     (type_def
       (identifier)

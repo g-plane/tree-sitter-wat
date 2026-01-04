@@ -5,7 +5,7 @@ start
 (module (start $main))
 ---
 
-(source_file
+(root
   (module
     (module_field_start
       (index

@@ -6,7 +6,7 @@ ident
   (func $f'))
 ---
 
-(source_file
+(root
   (module
     (module_field_func
       (identifier))

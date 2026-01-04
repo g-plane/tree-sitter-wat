@@ -33,7 +33,8 @@ call indirect
   (func (result i32) unreachable call_indirect select call_indirect)
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_table
       (ref_type)

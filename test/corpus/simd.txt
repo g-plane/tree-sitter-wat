@@ -12,7 +12,8 @@ simd
   )
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_func
       (plain_instr

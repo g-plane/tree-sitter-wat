@@ -68,7 +68,8 @@ exports
 (module (export "a" (memory $a)) (memory $a 0))
 (module (export "a" (memory $a)) (memory $a 0 1))
 ---
-(source_file
+
+(root
   (line_comment)
   (module
     (module_field_func)

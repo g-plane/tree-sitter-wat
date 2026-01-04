@@ -23,7 +23,8 @@ global
   (global funcref (ref.null func))
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_global
       (import

@@ -4,7 +4,7 @@ implicit
   (func $f ( param i32 ) )
 ---
 
-(source_file
+(root
   (module_field_func
     (identifier)
     (param

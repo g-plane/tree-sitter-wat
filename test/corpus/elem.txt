@@ -84,7 +84,8 @@ elem
   (table $t funcref (elem (ref.func $f) (ref.null func) (ref.func $g)))
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_table
       (identifier)

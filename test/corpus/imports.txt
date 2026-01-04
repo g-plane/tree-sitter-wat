@@ -35,7 +35,8 @@ imports
   (import "" "" (tag))
 )
 ---
-(source_file
+
+(root
   (module
     (line_comment)
     (module_field_import

@@ -12,7 +12,8 @@ struct
   (type (struct (field $x2 i32) (field f32 f64) (field $y2 i32)))
 )
 ---
-(source_file
+
+(root
   (module
     (type_def
       (sub_type

@@ -29,7 +29,8 @@ data
   (data $d12 (memory $m) (offset (i32.const 0)) "" "a" "bc" "")
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_memory
       (identifier)

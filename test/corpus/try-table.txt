@@ -15,7 +15,8 @@ try_table
   )
 )
 ---
-(source_file
+
+(root
   (module
     (module_field_func
       (block_try_table)

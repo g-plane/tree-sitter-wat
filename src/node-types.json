@@ -1366,12 +1366,7 @@
     }
   },
   {
-    "type": "shape_descriptor",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "source_file",
+    "type": "root",
     "named": true,
     "root": true,
     "fields": {},
@@ -1433,6 +1428,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "shape_descriptor",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "struct_type",

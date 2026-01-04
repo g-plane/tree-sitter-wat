@@ -157,7 +157,7 @@ if
 )
 ---
 
-(source_file
+(root
   (module
     (module_field_func
       (export
