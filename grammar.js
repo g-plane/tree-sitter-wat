@@ -11,7 +11,7 @@ export default grammar({
   name: 'wat',
 
   rules: {
-    source_file: $ => choice(repeat($.module), alias(repeat1($._module_field), $.module)),
+    source_file: $ => choice(repeat($.module), repeat1($._module_field)),
 
     addr_type: _ => choice('i32', 'i64'),
 
@@ -142,10 +142,39 @@ export default grammar({
         ')',
       ),
 
-    catch: $ =>
+    _call_indirect: $ =>
       choice(
-        seq(choice('catch', 'catch_ref'), $.index, $.index),
-        seq(choice('catch_all', 'catch_all_ref'), $.index),
+        $._call_indirect_folded,
+        seq(
+          alias(choice('call_indirect', 'return_call_indirect'), $.instr_name),
+          optional(choice(
+            seq($.type_use, repeat($.param), repeat($.result)),
+            seq(repeat1($.param), repeat($.result)),
+            repeat1($.result),
+          )),
+        ),
+      ),
+    _call_indirect_folded: $ =>
+      seq(
+        '(',
+        alias(choice('call_indirect', 'return_call_indirect'), $.instr_name),
+        optional(choice(
+          seq($.type_use, repeat($.param), repeat($.result)),
+          seq(repeat1($.param), repeat($.result)),
+          repeat1($.result),
+        )),
+        repeat($._instr_folded),
+        ')',
+      ),
+
+    catch: $ =>
+      seq(
+        '(',
+        choice(
+          seq(choice('catch', 'catch_ref'), $.index, $.index),
+          seq(choice('catch_all', 'catch_all_ref'), $.index),
+        ),
+        ')',
       ),
 
     _composite_type: $ => choice($.func_type, $.struct_type, $.array_type),
@@ -159,6 +188,7 @@ export default grammar({
     elem_list: $ =>
       choice(
         seq('func', repeat($.index)),
+        repeat1($.index),
         seq($.ref_type, repeat($.elem_expr)),
       ),
 
@@ -175,11 +205,20 @@ export default grammar({
         $.extern_type_tag,
       ),
     extern_type_func: $ =>
-      seq('(', 'func', $.index, optional($.type_use), repeat($.param), repeat($.result), ')'),
-    extern_type_global: $ => seq('(', 'global', $.index, $.global_type, ')'),
-    extern_type_memory: $ => seq('(', 'memory', $.index, $.mem_type, ')'),
-    extern_type_table: $ => seq('(', 'table', $.index, $.table_type, ')'),
-    extern_type_tag: $ => seq('(', 'tag', $.index, optional($.type_use), repeat($.param), ')'),
+      seq(
+        '(',
+        'func',
+        optional($.identifier),
+        optional($.type_use),
+        repeat($.param),
+        repeat($.result),
+        ')',
+      ),
+    extern_type_global: $ => seq('(', 'global', optional($.identifier), $.global_type, ')'),
+    extern_type_memory: $ => seq('(', 'memory', optional($.identifier), $.mem_type, ')'),
+    extern_type_table: $ => seq('(', 'table', optional($.identifier), $.table_type, ')'),
+    extern_type_tag: $ =>
+      seq('(', 'tag', optional($.identifier), optional($.type_use), repeat($.param), ')'),
 
     field: $ =>
       seq(
@@ -212,7 +251,7 @@ export default grammar({
         $.index,
       ),
 
-    immediate: $ =>
+    _immediate: $ =>
       choice(
         $.integer,
         $.float,
@@ -222,23 +261,29 @@ export default grammar({
         $.mem_arg,
         $.ref_type,
         $.heap_type,
-        seq($.type_use, repeat($.param), repeat($.result)),
-        seq(repeat1($.param), repeat($.result)),
-        repeat1($.result),
       ),
 
     import: $ => seq('(', 'import', $.string, $.string, ')'),
 
     index: $ => choice($.identifier, $.uinteger),
 
-    _instr: $ => choice($.block_block, $.block_loop, $.block_if, $.block_try_table, $.plain_instr),
+    _instr: $ =>
+      choice(
+        $.block_block,
+        $.block_loop,
+        $.block_if,
+        $.block_try_table,
+        $.plain_instr,
+        alias($._call_indirect, $.plain_instr),
+      ),
     _instr_folded: $ =>
       choice(
-        $._block_block_folded,
-        $._block_loop_folded,
-        $._block_if_folded,
-        $._block_try_table_folded,
-        $._plain_instr_folded,
+        alias($._block_block_folded, $.block_block),
+        alias($._block_loop_folded, $.block_loop),
+        alias($._block_if_folded, $.block_if),
+        alias($._block_try_table_folded, $.block_try_table),
+        alias($._plain_instr_folded, $.plain_instr),
+        alias($._call_indirect_folded, $.plain_instr),
       ),
 
     local: $ =>
@@ -299,9 +344,9 @@ export default grammar({
           seq(
             optional($.identifier),
             choice(optional('declare'), seq(optional($.table_use), $.offset)),
-            $.elem_list,
+            optional($.elem_list),
           ),
-          seq($.offset, alias(repeat($.index), $.elem_list)),
+          seq($.offset, optional($.elem_list)),
         ),
         ')',
       ),
@@ -390,9 +435,13 @@ export default grammar({
         ')',
       ),
 
-    plain_instr: $ => choice($._plain_instr_folded, seq($.instr_name, repeat($.immediate))),
+    plain_instr: $ =>
+      choice(
+        $._plain_instr_folded,
+        seq($.instr_name, repeat($._immediate)),
+      ),
     _plain_instr_folded: $ =>
-      seq('(', $.instr_name, repeat($.immediate), repeat($._instr_folded), ')'),
+      seq('(', $.instr_name, repeat($._immediate), repeat($._instr_folded), ')'),
 
     rec_type: $ => seq('(', 'rec', repeat($.type_def), ')'),
 
@@ -445,22 +494,35 @@ export default grammar({
 
     // tokens
     identifier: _ => token(/\$(?:[a-z\d!#$%&'*+-./:<=>?@\\\^_`|~]+|"[^"\r\n]*")/i),
-    instr_name: _ => token(/[a-z\d!#$%&'*+-./:<=>?@\\\^_`|~]+/i),
-    integer: _ => token(/[+-]?(?:\d(?:_\d+)*\d*|0x[\da-fA-F](?:_[\da-fA-F])*[\da-fA-F]*)/),
+    instr_name: _ => token(/[a-z_]+(?:[a-z\d\._]+)?/i),
+    integer: _ => token(/[+-]?(?:\d+(?:_\d+)*\d*|0x[\da-fA-F]+(?:_[\da-fA-F]+)*[\da-fA-F]*)/),
     float: _ =>
-      token(
-        /([+-]?(\d(_\d+)*\d*\.(\d(_\d+)*\d*)?([Ee][+-]?\d(_\d+)*\d*)?|0x[\da-fA-F](_[\da-fA-F]+)*[\da-fA-F]*\.([\da-fA-F](_[\da-fA-F]+)*[\da-fA-F]*)?([Pp][+-]?\d(_\d+)*\d*)?)|inf|nan(\:0x[\da-fA-F](_[\da-fA-F])*[\da-fA-F]*))/,
+      choice(
+        token(
+          /[+-]?((\d+(_\d+)*\d*\.(\d+(_\d+)*\d*)?([Ee][+-]?\d+(_\d+)*\d*)?|0x[\da-fA-F]+(_[\da-fA-F]+)*[\da-fA-F]*\.([\da-fA-F]+(_[\da-fA-F]+)*[\da-fA-F]*)?([Pp][+-]?\d+(_\d+)*\d*)?)|inf|nan(\:0x[\da-fA-F]+(_[\da-fA-F])*[\da-fA-F]*)?)/,
+        ),
+        token(
+          /[+-]?(\d+(_\d+)*\d*[Ee]|0x[\da-fA-F]+(_[\da-fA-F]+)*[\da-fA-F]*[Pp])[+-]?\d+(_\d+)*\d*/,
+        ),
       ),
     mem_arg: _ =>
       token(/(?:align|offset)=(?:\d(?:_\d+)*\d*|0x[\da-fA-F](?:_[\da-fA-F])*[\da-fA-F]*)/),
-    shape_descriptor: _ => token(choice('i8x16', 'i16x8', 'i32x4', 'i64x2', 'f32x4', 'f64x2')),
+    shape_descriptor: _ =>
+      choice(
+        token('i8x16'),
+        token('i16x8'),
+        token('i32x4'),
+        token('i64x2'),
+        token('f32x4'),
+        token('f64x2'),
+      ),
     share: _ => token(/(?:un)?shared/),
-    string: _ => token(/"[^"\r\n]*"/),
-    uinteger: _ => token(/(?:\d(?:_\d+)*\d*|0x[\da-fA-F](?:_[\da-fA-F])*[\da-fA-F]*)/),
+    string: _ => token(/"(?:[^"\r\n]|\\")*"/),
+    uinteger: _ => token(/(?:\d+(?:_\d+)*\d*|0x[\da-fA-F]+(?:_[\da-fA-F])*[\da-fA-F]*)/),
 
     // trivias
     _annotation: $ => seq($.annotation_start, repeat($.annotation_elem), $.annotation_end),
-    annotation_start: _ => token(/\(\@(?:[a-z\d!#$%&'*+-./:<=>?@\\\^_`|~]+|"[^"\r\n]*")/i),
+    annotation_start: _ => token(/\(\@(?:[a-z\d!#$%&'*+-./:<=>?@\\\^_`|~]+|"(?:[^"\r\n]|\\")*")/i),
     annotation_elem: _ => token(/[^)\s]+/),
     annotation_end: _ => token(')'),
     block_comment: _ => token(/\(;.*;\)/),
@@ -471,7 +533,8 @@ export default grammar({
 
   conflicts: $ => [
     [$.plain_instr],
-    [$.immediate],
-    [$.index, $.immediate],
+    [$.index, $._immediate],
+    [$._call_indirect],
+    [$.index, $.module_field_elem],
   ],
 })
