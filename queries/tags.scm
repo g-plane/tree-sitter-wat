@@ -1,3 +1,6 @@
+(module
+  (identifier) @name) @definition.module
+
 (module_field_func
   (identifier) @name) @definition.function
 
