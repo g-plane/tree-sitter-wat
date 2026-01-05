@@ -717,10 +717,31 @@
   {
     "type": "mem_type",
     "named": true,
-    "fields": {},
+    "fields": {
+      "max": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "uinteger",
+            "named": true
+          }
+        ]
+      },
+      "min": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "uinteger",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "addr_type",
@@ -732,10 +753,6 @@
         },
         {
           "type": "share",
-          "named": true
-        },
-        {
-          "type": "uinteger",
           "named": true
         }
       ]
@@ -1484,7 +1501,28 @@
   {
     "type": "table_type",
     "named": true,
-    "fields": {},
+    "fields": {
+      "max": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "uinteger",
+            "named": true
+          }
+        ]
+      },
+      "min": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "uinteger",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1495,10 +1533,6 @@
         },
         {
           "type": "ref_type",
-          "named": true
-        },
-        {
-          "type": "uinteger",
           "named": true
         }
       ]

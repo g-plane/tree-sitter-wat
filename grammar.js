@@ -299,8 +299,8 @@ export default grammar({
     mem_type: $ =>
       seq(
         optional($.addr_type),
-        $.uinteger,
-        optional($.uinteger),
+        field('min', $.uinteger),
+        field('max', optional($.uinteger)),
         optional($.share),
         optional($.mem_page_size),
       ),
@@ -477,8 +477,8 @@ export default grammar({
     table_type: $ =>
       seq(
         optional($.addr_type),
-        $.uinteger,
-        optional($.uinteger),
+        field('min', $.uinteger),
+        field('max', optional($.uinteger)),
         $.ref_type,
       ),
 
