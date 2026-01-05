@@ -61,9 +61,9 @@
 (num_type) @type.builtin
 (vec_type) @type.builtin
 ((ref_type) @type.builtin
- (#match? @type.builtin "^(any|eq|i31|struct|array|null|func|nullfunc|exn|nullexn|extern|nullextern)ref$"))
+ (#match? @type.builtin "^(any|eq|i31|struct|array|null|(null)?func|(null)?exn|(null)?extern)ref$"))
 ((heap_type) @type.builtin
- (#match? @type.builtin "^(any|eq|i31|struct|array|null|func|nullfunc|exn|nullexn|extern|nullextern)$"))
+ (#match? @type.builtin "^(any|eq|i31|struct|array|null|(null)?func|(null)?exn|(null)?extern)$"))
 
 (identifier) @variable
 (index) @variable
@@ -72,3 +72,16 @@
   (identifier) @function)
 (extern_type_func
   (identifier) @function)
+(module_field_start
+  (index
+    [
+      (identifier)
+      (uinteger)
+    ] @function))
+(plain_instr
+  ((instr_name) @operator
+    (#match? @operator "^(return_)?call$"))
+  [
+    (identifier)
+    (integer)
+  ] @function)
