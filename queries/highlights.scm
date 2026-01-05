@@ -1,5 +1,7 @@
-(block_comment) @comment
-(line_comment) @comment
+[
+  (block_comment)
+  (line_comment)
+] @comment
 ((block_comment)+ @comment.documentation
   (#match? @comment.documentation "^;;;\\s+.*"))
 
@@ -47,8 +49,10 @@
   "unshared"
 ] @keyword
 
-(integer) @number
-(float) @number
+[
+  (integer)
+  (float)
+] @number
 
 (instr_name) @operator
 
@@ -58,8 +62,11 @@
 
 (string) @string
 
-(num_type) @type.builtin
-(vec_type) @type.builtin
+[
+  (num_type)
+  (vec_type)
+  (packed_type)
+] @type.builtin
 ((ref_type) @type.builtin
  (#match? @type.builtin "^(any|eq|i31|struct|array|null|(null)?func|(null)?exn|(null)?extern)ref$"))
 ((heap_type) @type.builtin
