@@ -72,6 +72,12 @@
     }
   },
   {
+    "type": "block_comment",
+    "named": true,
+    "extra": true,
+    "fields": {}
+  },
+  {
     "type": "block_if",
     "named": true,
     "fields": {},
@@ -1592,7 +1598,15 @@
     "named": false
   },
   {
+    "type": "(;",
+    "named": false
+  },
+  {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": ";)",
     "named": false
   },
   {
@@ -1622,11 +1636,6 @@
   {
     "type": "block",
     "named": false
-  },
-  {
-    "type": "block_comment",
-    "named": true,
-    "extra": true
   },
   {
     "type": "catch",

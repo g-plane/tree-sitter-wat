@@ -525,11 +525,13 @@ export default grammar({
     annotation_start: _ => token(/\(\@(?:[a-z\d!#$%&'*+-./:<=>?@\\\^_`|~]+|"(?:[^"\r\n]|\\")*")/i),
     annotation_elem: _ => token(/[^)\s]+/),
     annotation_end: _ => token(')'),
-    block_comment: _ => token(/\(;.*;\)/),
+    block_comment: $ => seq('(;', $._block_comment_content, ';)'),
     line_comment: _ => token(/;;[^\r\n]*/),
   },
 
-  extras: $ => [/\s/, $.block_comment, $.line_comment, $._annotation],
+  extras: $ => [/\s+/, $.block_comment, $.line_comment, $._annotation],
+
+  externals: $ => [$._block_comment_content],
 
   conflicts: $ => [
     [$.plain_instr],
