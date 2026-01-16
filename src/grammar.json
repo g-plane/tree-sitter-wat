@@ -3366,8 +3366,16 @@
           "value": "(;"
         },
         {
-          "type": "SYMBOL",
-          "name": "_block_comment_content"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_block_comment_content"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",

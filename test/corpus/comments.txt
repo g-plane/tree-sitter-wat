@@ -2,7 +2,7 @@
 block comment
 ==================
 (module
-  (type $t (func))
+  (type $t (;;) (func))
   (;
   (memory)
   ;)
@@ -15,6 +15,7 @@ block comment
   (module
     (type_def
       (identifier)
+      (block_comment)
       (sub_type
         (func_type)))
     (block_comment)

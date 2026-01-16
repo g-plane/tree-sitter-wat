@@ -525,7 +525,7 @@ export default grammar({
     annotation_start: _ => token(/\(\@(?:[a-z\d!#$%&'*+-./:<=>?@\\\^_`|~]+|"(?:[^"\r\n]|\\")*")/i),
     annotation_elem: _ => token(/[^)\s]+/),
     annotation_end: _ => token(')'),
-    block_comment: $ => seq('(;', $._block_comment_content, ';)'),
+    block_comment: $ => seq('(;', optional($._block_comment_content), ';)'),
     line_comment: _ => token(/;;[^\r\n]*/),
   },
 
