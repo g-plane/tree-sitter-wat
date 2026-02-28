@@ -1033,6 +1033,31 @@
         {
           "type": "SYMBOL",
           "name": "array_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "cont_type"
+        }
+      ]
+    },
+    "cont_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": "cont"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "index"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -1648,6 +1673,14 @@
           "value": "noextern"
         },
         {
+          "type": "STRING",
+          "value": "cont"
+        },
+        {
+          "type": "STRING",
+          "value": "nocont"
+        },
+        {
           "type": "SYMBOL",
           "name": "index"
         }
@@ -1687,6 +1720,10 @@
         {
           "type": "SYMBOL",
           "name": "heap_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "on_clause"
         }
       ]
     },
@@ -2715,6 +2752,40 @@
         }
       ]
     },
+    "on_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": "on"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "index"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "index"
+            },
+            {
+              "type": "STRING",
+              "value": "switch"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "packed_type": {
       "type": "CHOICE",
       "members": [
@@ -2900,6 +2971,14 @@
         {
           "type": "STRING",
           "value": "nullexternref"
+        },
+        {
+          "type": "STRING",
+          "value": "contref"
+        },
+        {
+          "type": "STRING",
+          "value": "nullcontref"
         },
         {
           "type": "SEQ",

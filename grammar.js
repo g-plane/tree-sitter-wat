@@ -177,7 +177,9 @@ export default grammar({
         ')',
       ),
 
-    _composite_type: $ => choice($.func_type, $.struct_type, $.array_type),
+    _composite_type: $ => choice($.func_type, $.struct_type, $.array_type, $.cont_type),
+
+    cont_type: $ => seq('(', 'cont', $.index, ')'),
 
     data: $ => seq('(', 'data', repeat($.string), ')'),
 
@@ -248,6 +250,8 @@ export default grammar({
         'noexn',
         'extern',
         'noextern',
+        'cont',
+        'nocont',
         $.index,
       ),
 
@@ -261,6 +265,7 @@ export default grammar({
         $.mem_arg,
         $.ref_type,
         $.heap_type,
+        $.on_clause,
       ),
 
     import: $ => seq('(', 'import', $.string, $.string, ')'),
@@ -425,6 +430,8 @@ export default grammar({
 
     offset: $ => choice(seq('(', 'offset', repeat($._instr), ')'), $._instr_folded),
 
+    on_clause: $ => seq('(', 'on', $.index, choice($.index, 'switch'), ')'),
+
     packed_type: _ => choice('i8', 'i16'),
 
     param: $ =>
@@ -459,6 +466,8 @@ export default grammar({
         'nullexnref',
         'externref',
         'nullexternref',
+        'contref',
+        'nullcontref',
         seq('(', 'ref', optional('null'), $.heap_type, ')'),
       ),
 
